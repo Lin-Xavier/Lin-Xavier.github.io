@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About · Xiang Lin</title>
+<meta name="description" content="About Xiang Lin, with CV.">
+<link rel="icon" href="assets/ft-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="index.html">Xiang Lin</a>
+    <nav aria-label="Main">
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html" aria-current="page">About</a>
+      <button class="theme" id="theme-toggle" type="button" aria-label="Color theme: automatic" title="Color theme: automatic"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><g class="i-auto"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 3a7 7 0 0 1 0 14z" fill="currentColor"/></g><g class="i-light"><circle cx="10" cy="10" r="3.6" fill="currentColor"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M10 1.8v2.1M10 16.1v2.1M1.8 10h2.1M16.1 10h2.1M4.2 4.2l1.5 1.5M14.3 14.3l1.5 1.5M4.2 15.8l1.5-1.5M14.3 5.7l1.5-1.5"/></g></g><g class="i-dark"><path d="M15.8 12.6A6.6 6.6 0 0 1 7.4 4.2a6.6 6.6 0 1 0 8.4 8.4z" fill="currentColor"/></g></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="page">
+    <h1>About</h1>
+    <p class="lede">I do linguistics research and build apps and utilities.</p>
+    <p>My <a href="research.html">Research</a> page covers my academic projects and engagements, and my <a href="projects.html">Projects</a> page shows the apps and utilities I've made. My CV has the full details.</p>
+    <form class="cv-form" id="cv-form" action="https://xiang-cv.xavierlin.workers.dev/" method="post">
+      <div id="cv-check"></div>
+      <div class="links">
+        <button class="btn primary" id="cv-download" type="submit" disabled>Download my CV (PDF)</button>
+        <a class="btn" href="mailto:public-contact@linxiang.email">public-contact@linxiang.email</a>
+      </div>
+    </form>
+  </section>
+
+  <footer>
+    <span>© 2026 Xiang Lin</span>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById("theme-toggle");
+  var order = ["auto", "light", "dark"];
+  var labels = { auto: "Color theme: automatic", light: "Color theme: light", dark: "Color theme: dark" };
+  var mode = "auto";
+  try { mode = localStorage.getItem("theme") || "auto"; } catch (e) {}
+  function apply() {
+    if (mode === "auto") root.removeAttribute("data-theme");
+    else root.setAttribute("data-theme", mode);
+    btn.setAttribute("aria-label", labels[mode]);
+    btn.title = labels[mode];
+    btn.dataset.mode = mode;
+  }
+  btn.addEventListener("click", function () {
+    mode = order[(order.indexOf(mode) + 1) % order.length];
+    try { localStorage.setItem("theme", mode); } catch (e) {}
+    apply();
+  });
+  apply();
+})();
+</script>
+<script>
+// The CV download is guarded by Cloudflare Turnstile; the Worker checks the token and sends the PDF.
+var cvWidget;
+function cvTheme() {
+  var t = document.documentElement.getAttribute("data-theme");
+  return t === "light" || t === "dark" ? t : "auto";
+}
+function onTurnstileLoad() {
+  var button = document.getElementById("cv-download");
+  cvWidget = turnstile.render("#cv-check", {
+    sitekey: "0x4AAAAAAFWOli0DaNBlAOn7",
+    theme: cvTheme(),
+    callback: function () { button.disabled = false; },
+    "expired-callback": function () { button.disabled = true; },
+    "error-callback": function () { button.disabled = true; }
+  });
+  // Each token works once, so get a fresh check after a download starts.
+  document.getElementById("cv-form").addEventListener("submit", function () {
+    button.disabled = true;
+    setTimeout(function () { turnstile.reset(cvWidget); }, 1500);
+  });
+}
+</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad" async defer></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Research · Xiang Lin</title>
+<meta name="description" content="Xiang Lin's linguistics research and publications.">
+<link rel="icon" href="assets/ft-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="index.html">Xiang Lin</a>
+    <nav aria-label="Main">
+      <a href="research.html" aria-current="page">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+      <button class="theme" id="theme-toggle" type="button" aria-label="Color theme: automatic" title="Color theme: automatic"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><g class="i-auto"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 3a7 7 0 0 1 0 14z" fill="currentColor"/></g><g class="i-light"><circle cx="10" cy="10" r="3.6" fill="currentColor"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M10 1.8v2.1M10 16.1v2.1M1.8 10h2.1M16.1 10h2.1M4.2 4.2l1.5 1.5M14.3 14.3l1.5 1.5M4.2 15.8l1.5-1.5M14.3 5.7l1.5-1.5"/></g></g><g class="i-dark"><path d="M15.8 12.6A6.6 6.6 0 0 1 7.4 4.2a6.6 6.6 0 1 0 8.4 8.4z" fill="currentColor"/></g></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="page">
+    <h1>Research</h1>
+    <p class="lede">I study how people learn, use and shorten words, and how names are built.</p>
+    <p>My interests are experimental psycholinguistics (especially artificial language learning), language evolution, language processing, efficient communication and the law of abbreviation, proper names and compositionality, and onomastics.</p>
+
+    <h2>Projects</h2>
+    <ul class="cv">
+      <li><span class="when">2026</span><div>
+        <h3>Does word class matter when speakers abbreviate? Evidence from sentence completion and dyadic communication</h3>
+        <p class="sub">MSc dissertation, University of Edinburgh</p>
+        <p>I tested how word class, frequency and the pressure to communicate affect abbreviation. I ran artificial language experiments in English and Chinese, and an English communication game played in pairs. I built the experiments in jsPsych with a Python WebSocket server for real-time play, and analysed the data in R with logistic and mixed-effects regression. People were reluctant to shorten place-names, but personal names showed no reliable effect of the same kind.</p>
+      </div></li>
+      <li><span class="when">2025</span><div>
+        <h3>From Cantonese Alleyways to Imperial Avenues: Onomastics in Hong Kong's Street-Names</h3>
+        <p class="sub">BA dissertation, University of Nottingham</p>
+        <p>I built a corpus of 4,585 official Hong Kong street-names with their English and Chinese forms, and <a href="https://osf.io/mw8bd">archived it openly on OSF</a>. I adapted the Australian National Placenames Survey typology to a bilingual setting. The English and Chinese generic terms line up systematically, but not one to one. I also proposed "two-character stitching" as a word-formation pattern to test in experiments. An essay from this work was a joint winner of the Society for Name Studies in Britain and Ireland Essay Prize in 2025.</p>
+      </div></li>
+      <li><span class="when">2024</span><div>
+        <h3>Usage labels in early nineteenth-century German-English dictionaries</h3>
+        <p class="sub">Research Assistant, University of Nottingham</p>
+        <p>I studied evaluative usage labels in bilingual dictionaries. I chose the source dictionaries, designed the sampling method, and combined frequency analysis with close reading of selected lemmas. I presented the results as a poster, which won the runner-up presentation prize.</p>
+      </div></li>
+    </ul>
+
+    <h2>Publications</h2>
+    <ul class="cv">
+      <li><span class="when">In press</span><div>Lin, X. From Cantonese Alleyways to Imperial Avenues: Onomastics in Hong Kong's Street-Names. <i>Innervate</i>.</div></li>
+    </ul>
+
+    <h2>Talks</h2>
+    <ul class="cv">
+      <li><span class="when">2025</span><div>Lin, X. <i>From Cantonese Alleyways to Imperial Avenues: Onomastics in Hong Kong's Street-Names.</i> Paper at the <a href="https://www.snsbi.org.uk/meeting/2025-autumn-conference-online/">Society for Name Studies in Britain and Ireland Autumn Conference</a> (online), 25 October 2025.</div></li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>© 2026 Xiang Lin</span>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById("theme-toggle");
+  var order = ["auto", "light", "dark"];
+  var labels = { auto: "Color theme: automatic", light: "Color theme: light", dark: "Color theme: dark" };
+  var mode = "auto";
+  try { mode = localStorage.getItem("theme") || "auto"; } catch (e) {}
+  function apply() {
+    if (mode === "auto") root.removeAttribute("data-theme");
+    else root.setAttribute("data-theme", mode);
+    btn.setAttribute("aria-label", labels[mode]);
+    btn.title = labels[mode];
+    btn.dataset.mode = mode;
+  }
+  btn.addEventListener("click", function () {
+    mode = order[(order.indexOf(mode) + 1) % order.length];
+    try { localStorage.setItem("theme", mode); } catch (e) {}
+    apply();
+  });
+  apply();
+})();
+</script>
+</body>
+</html>
